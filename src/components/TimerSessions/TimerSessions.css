@@ -1,0 +1,25 @@
+.ten {
+  width: 83.33%;
+}
+
+.button-group {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.button-group li {
+  padding: 0;
+  margin: 0 0 0 -1px;
+  float: left;
+  width: 33.33%;
+}
+
+.button-group .button {
+  width: 100%;
+}
+
+.button-group .button.active {
+  color: #fff;
+  background-color: #2284a1;
+}

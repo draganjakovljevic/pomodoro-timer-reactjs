@@ -1,0 +1,27 @@
+.time-log-table {
+  padding: 30px;
+}
+
+.time-log-table table {
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.time-log-table table tbody {
+  display: table;
+  width: 100%;
+}
+
+.time-log-table table tbody tr th {
+  text-align: center;
+}
+
+.time-log-table table tbody td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+.time-log-table table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
