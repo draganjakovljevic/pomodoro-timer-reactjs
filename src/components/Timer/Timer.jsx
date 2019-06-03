@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TimerHeader from "../TimerHeader/TimerHeader";
-import TimerDisplay from "../TimerDisplay/TimerDisplay";
-import TimerButtons from "../TimerButtons/TimerButtons";
-import TimerSessions from "../TimerSessions/TimerSessions";
+import TimerDisplay from "./TimerDisplay/TimerDisplay";
+import TimerButtons from "./TimerButtons/TimerButtons";
+import TimerSessions from "./TimerSessions/TimerSessions";
+import "./Timer.css";
 import * as timerStates from "../../timerStates";
 import * as timerSessions from "../../timerSessions";
 import helpers from "../../helpers";
@@ -195,27 +196,32 @@ class Timer extends Component {
     let logs = [];
     if (localStorage.getItem("logs")) {
       logs = JSON.parse(localStorage.getItem("logs"));
-    } else {
-      if (this.state.timerSession === timerSessions.POMODORO) {
-        logs.push({
-          session: "pomodoro",
-          startTime: this.state.startTime,
-          endTime: this.state.endTime
-        });
-      } else if (this.state.timerSession === timerSessions.SHORT_BREAK) {
-        logs.push({
-          session: "short_break",
-          startTime: this.state.startTime,
-          endTime: this.state.endTime
-        });
-      } else {
-        logs.push({
-          session: "long_break",
-          startTime: this.state.startTime,
-          endTime: this.state.endTime
-        });
-      }
     }
+    if (this.state.timerSession === timerSessions.POMODORO) {
+      logs.push({
+        session: "pomodoro",
+        startTime: this.state.startTime,
+        endTime: this.state.endTime
+      });
+    } else if (this.state.timerSession === timerSessions.SHORT_BREAK) {
+      logs.push({
+        session: "short_break",
+        startTime: this.state.startTime,
+        endTime: this.state.endTime
+      });
+    } else {
+      logs.push({
+        session: "long_break",
+        startTime: this.state.startTime,
+        endTime: this.state.endTime
+      });
+    }
+
+    // rind the bell
+    const audio = new Audio(
+      "http://sfxcontent.s3.amazonaws.com/soundfx/BoxingBell.mp3"
+    );
+    audio.play();
 
     // set to localStorage
     localStorage.setItem("logs", JSON.stringify(logs));

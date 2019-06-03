@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./TimerSessions.css";
-import { POMODORO, SHORT_BREAK } from "../../timerSessions";
+import * as timerSessions from "../../../timerSessions";
 
 class TimerSessions extends Component {
   render() {
@@ -8,9 +8,9 @@ class TimerSessions extends Component {
     let shortActiveClass = "";
     let longActiveClass = "";
 
-    if (this.props.timerSession === POMODORO) {
+    if (this.props.timerSession === timerSessions.POMODORO) {
       pomodoroActiveClass = " active";
-    } else if (this.props.timerSession === SHORT_BREAK) {
+    } else if (this.props.timerSession === timerSessions.SHORT_BREAK) {
       shortActiveClass = " active";
     } else {
       longActiveClass = " active";
