@@ -1,3 +1,5 @@
+/* css used across different components */
+
 .row {
   width: 940px;
   max-width: 100%;
@@ -39,6 +41,10 @@
 
 .button.radius {
   border-radius: 3px;
+}
+
+.four {
+  width: 33.33%;
 }
 
 @media only screen and (max-width: 767px) {
