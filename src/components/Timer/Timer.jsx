@@ -178,8 +178,8 @@ class Timer extends Component {
       localStorage.setItem("currentTime", this.state.longBreakBaseTime);
     }
 
-    // set to localStorage
-    localStorage.setItem("timerState", timerStates.NOT_SET);
+    // start current session again
+    this.launchTimer();
   }
 
   completeTimer() {
@@ -217,7 +217,7 @@ class Timer extends Component {
       });
     }
 
-    // rind the bell
+    // ring the bell
     const audio = new Audio(
       "http://sfxcontent.s3.amazonaws.com/soundfx/BoxingBell.mp3"
     );
