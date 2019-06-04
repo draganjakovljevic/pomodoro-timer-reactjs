@@ -26,8 +26,6 @@ class Timer extends Component {
       endTime: ""
     };
 
-    this.mounted = false;
-
     this.startTimer = this.startTimer.bind(this);
     this.reduceTimer = this.reduceTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
@@ -38,9 +36,8 @@ class Timer extends Component {
   }
 
   componentWillMount() {
-    this.mounted = true;
-
-    if (localStorage.getItem("pomodoroBaseTime")) {
+    // check if base times are set
+    if (localStorage.length > 0) {
       const pomodoroBaseTime = new Date(
         localStorage.getItem("pomodoroBaseTime")
       );
@@ -59,6 +56,8 @@ class Timer extends Component {
         longBreakBaseTime,
         currentTime
       });
+
+      // set base times
     } else {
       const dt1 = new Date();
       dt1.setHours(0);
@@ -86,12 +85,14 @@ class Timer extends Component {
       localStorage.setItem("shortBreakBaseTime", dt2);
       localStorage.setItem("longBreakBaseTime", dt3);
       localStorage.setItem("currentTime", dt1);
-      localStorage.setItem("timerSession", timerSessions.POMODORO);
     }
+    // set pomodoro session as default
+    localStorage.setItem("timerSession", timerSessions.POMODORO);
   }
 
   componentWillUnmount() {
-    this.mounted = false;
+    // prevent memory leak
+    clearInterval(this.state.timer);
   }
   // #################################################################################
   // ############################ Timer buttons ######################################
@@ -103,33 +104,28 @@ class Timer extends Component {
       this.state.currentTime.getMinutes() !== 0 ||
       this.state.currentTime.getSeconds() !== 0
     ) {
-      //  starts intial pomodoro or continues previous stopped session
+      //  starts initial pomodoro or continues previous stopped session
       this.launchTimer();
     }
   }
 
   reduceTimer() {
-    // prevent memory leak with mounted variable
-    if (this.mounted) {
-      if (
-        this.state.currentTime.getMinutes() === 0 &&
-        this.state.currentTime.getSeconds() === 0
-      ) {
-        this.completeTimer();
-        return;
-      }
-
-      const newDt = new Date(this.state.currentTime);
-      newDt.setSeconds(newDt.getSeconds() - 1);
-
-      this.setState({
-        currentTime: newDt
-      });
-      // set to localStorage
-      localStorage.setItem("currentTime", newDt);
-    } else {
-      clearInterval(this.state.timer);
+    if (
+      this.state.currentTime.getMinutes() === 0 &&
+      this.state.currentTime.getSeconds() === 0
+    ) {
+      this.completeTimer();
+      return;
     }
+
+    const newDt = new Date(this.state.currentTime);
+    newDt.setSeconds(newDt.getSeconds() - 1);
+
+    this.setState({
+      currentTime: newDt
+    });
+    // set to localStorage
+    localStorage.setItem("currentTime", newDt);
   }
 
   stopTimer() {
