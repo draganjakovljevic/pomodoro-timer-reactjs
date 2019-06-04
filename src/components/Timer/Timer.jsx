@@ -217,7 +217,16 @@ class Timer extends Component {
     const audio = new Audio(
       "http://sfxcontent.s3.amazonaws.com/soundfx/BoxingBell.mp3"
     );
-    audio.play();
+
+    const playedPromise = audio.play();
+    // handling crashes when auto play is not allowed
+    if (playedPromise) {
+      playedPromise.catch(e => {
+        if (e.name === "NotAllowedError" || e.name === "NotSupportedError") {
+          console.log(e.name + ", Auto-play was prevented.");
+        }
+      });
+    }
 
     // set to localStorage
     localStorage.setItem("logs", JSON.stringify(logs));
