@@ -17,6 +17,7 @@ class TimerSettings extends Component {
     this.pomodoroHandleChange = this.pomodoroHandleChange.bind(this);
     this.shortBreakHandleChange = this.shortBreakHandleChange.bind(this);
     this.longBreakHandleChange = this.longBreakHandleChange.bind(this);
+    this.handleKeypress = this.handleKeypress.bind(this);
   }
 
   componentDidMount() {
@@ -100,6 +101,22 @@ class TimerSettings extends Component {
     this.setState({ longBreakMinutes: e.target.value });
   }
 
+  handleKeypress(e) {
+    const characterCode = e.key;
+    if (characterCode === "Backspace") return;
+
+    const characterNumber = Number(characterCode);
+    if (characterNumber >= 0 && characterNumber <= 9) {
+      if (e.currentTarget.value && e.currentTarget.value.length) {
+        return;
+      } else if (characterNumber === 0) {
+        e.preventDefault();
+      }
+    } else {
+      e.preventDefault();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -119,6 +136,7 @@ class TimerSettings extends Component {
                 name="time_pomodoro"
                 value={this.state.pomodoroMinutes}
                 onChange={this.pomodoroHandleChange}
+                onKeyDown={this.handleKeypress}
               />
             </div>
             <div className="four columns">
@@ -131,6 +149,7 @@ class TimerSettings extends Component {
                 name="time_shortbreak"
                 value={this.state.shortBreakMinutes}
                 onChange={this.shortBreakHandleChange}
+                onKeyDown={this.handleKeypress}
               />
             </div>
             <div className="four columns">
@@ -143,6 +162,7 @@ class TimerSettings extends Component {
                 name="time_longbreak"
                 value={this.state.longBreakMinutes}
                 onChange={this.longBreakHandleChange}
+                onKeyDown={this.handleKeypress}
               />
             </div>
           </div>
